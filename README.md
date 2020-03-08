@@ -1,17 +1,17 @@
 <!--
  * @Author: your name
  * @Date: 2020-03-08 19:29:37
- * @LastEditTime: 2020-03-08 19:44:15
+ * @LastEditTime: 2020-03-08 19:52:40
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \DevUI-Language-Support\README.md
  -->
 # 一个基于LSP的DevUI语言组件
 
-
+![demo](https://s2.ax1x.com/2020/03/08/3z184H.gif)
 
 这个组件面向DevUI组件库的开发者，将提供有关于DevUI开源组件库的一系列帮助，包括:
-1、代码提示与补全
+1、代码提示
 2、代码纠错
 3、悬浮提醒
 4、跳转帮助
@@ -47,7 +47,7 @@
   - Type `j` or `t` to see `Javascript` and `TypeScript` completion.
   - Enter text content such as `AAA aaa BBB`. The extension will emit diagnostics for all words in all-uppercase.
 
-  ## DevUI
+## 关于DevUI
 
-  DevUI官方网址:https://devui.design/home
-  DevUI组件库:https://github.com/sspku-yqLiu/ng-devui
+DevUI官方网址:https://devui.design/home
+DevUI组件库:https://github.com/sspku-yqLiu/ng-devui
