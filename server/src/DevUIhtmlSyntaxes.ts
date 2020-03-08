@@ -1,7 +1,7 @@
 /*
  * @Author: your name
  * @Date: 2020-03-08 16:42:49
- * @LastEditTime: 2020-03-08 18:53:32
+ * @LastEditTime: 2020-03-08 19:45:44
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \lsp-sample\server\syntaxes\DevUIhtmlSyntaxes.ts
@@ -48,7 +48,7 @@ export const DevUIhtmlSyntaxes=[
 		{
 		label: 'd-button',
 		kind: CompletionItemKind.Property,
-		insertText: '<d-button>\n</d-button>',
+		insertText: '<d-button></d-button>',
 		data: 'button',
 		sortText: 'dbutton',
 		},

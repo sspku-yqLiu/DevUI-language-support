@@ -1,14 +1,23 @@
-# LSP Example
+<!--
+ * @Author: your name
+ * @Date: 2020-03-08 19:29:37
+ * @LastEditTime: 2020-03-08 19:44:15
+ * @LastEditors: Please set LastEditors
+ * @Description: In User Settings Edit
+ * @FilePath: \DevUI-Language-Support\README.md
+ -->
+# 一个基于LSP的DevUI语言组件
 
-Heavily documented sample code for https://code.visualstudio.com/api/language-extensions/language-server-extension-guide
 
-## Functionality
 
-This Language Server works for plain text file. It has the following language features:
-- Completions
-- Diagnostics regenerated on each file change or configuration change
+这个组件面向DevUI组件库的开发者，将提供有关于DevUI开源组件库的一系列帮助，包括:
+1、代码提示与补全
+2、代码纠错
+3、悬浮提醒
+4、跳转帮助
+(以上内容均暂未实现)
 
-It also includes an End-to-End test.
+
 
 ## Structure
 
@@ -21,7 +30,8 @@ It also includes an End-to-End test.
 ├── package.json // The extension manifest.
 └── server // Language Server
     └── src
-        └── server.ts // Language Server entry point
+        ├──server.ts // Language Server entry point
+        └── DevUIhtmlSyntaxes.ts // DevUI语法库
 ```
 
 ## Running the Sample
@@ -36,3 +46,8 @@ It also includes an End-to-End test.
 - In the [Extension Development Host] instance of VSCode, open a document in 'plain text' language mode.
   - Type `j` or `t` to see `Javascript` and `TypeScript` completion.
   - Enter text content such as `AAA aaa BBB`. The extension will emit diagnostics for all words in all-uppercase.
+
+  ## DevUI
+
+  DevUI官方网址:https://devui.design/home
+  DevUI组件库:https://github.com/sspku-yqLiu/ng-devui
