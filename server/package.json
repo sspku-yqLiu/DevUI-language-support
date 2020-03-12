@@ -1,7 +1,7 @@
 {
-	"name": "devuilanguagesupport",
-	"description": "Example implementation of a language server in node.",
-	"version": "1.0.0",
+	"name": "devui-language-support-server",
+	"description": "It is a server",
+	"version": "0.1.0",
 	"author": "yqLiu",
 	"license": "MIT",
 	"engines": {

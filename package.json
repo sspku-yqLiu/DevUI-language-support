@@ -1,9 +1,9 @@
 {
-	"name": "lsp-sample",
-	"description": "A language server example",
-	"author": "Microsoft Corporation",
+	"name": "devui-language-support",
+	"description": "language support for DevUI",
+	"author": "yqLiu",
 	"license": "MIT",
-	"version": "1.0.0",
+	"version": "0.1.0",
 	"repository": {
 		"type": "git",
 		"url": "https://github.com/sspku-yqLiu/DevUI-language-support.git"

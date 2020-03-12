@@ -1,7 +1,7 @@
 /*
  * @Author: your name
  * @Date: 2020-03-08 16:42:49
- * @LastEditTime: 2020-03-12 12:05:30
+ * @LastEditTime: 2020-03-10 12:39:29
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \lsp-sample\server\syntaxes\DevUIhtmlSyntaxes.ts
@@ -48,7 +48,7 @@ export const DevUIhtmlSyntaxes=[
 		{
 		label: 'dbutton',
 		kind: CompletionItemKind.Property,
-		insertText: '<d-button></d-button>',
+		insertText: '<d-button>\n</d-button>',
 		data: 'button',
 		sortText: 'dbutton',
 		},
@@ -387,6 +387,21 @@ export const DevUIhtmlSyntaxes=[
 		insertText: '<d-utils>\n</d-utils>',
 		data: 'utils',
 		sortText: 'dutils',
-		}
+		},
+		{
+		label: 'dversion.d.ts',
+		kind: CompletionItemKind.Property,
+		insertText: '<d-version.d.ts>\n</d-version.d.ts>',
+		data: 'version.d.ts',
+		sortText: 'dversion.d.ts',
+		},
+		{
+		label: 'dwindow-ref',
+		kind: CompletionItemKind.Property,
+		insertText: '<d-window-ref>\n</d-window-ref>',
+		data: 'window-ref',
+		sortText: 'dwindow-ref',
+		},
+			
 		
 ];
