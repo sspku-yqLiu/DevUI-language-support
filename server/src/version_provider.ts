@@ -6,8 +6,9 @@
  * found in the LICENSE file at https://angular.io/license
  */
 
-const MIN_TS_VERSION = '3.7';
-const MIN_NG_VERSION = '9.0';
+const MIN_TS_VERSION = '3.2';
+const MIN_NG_VERSION = '7.0';
+const MIN_DEVUI_VERSION = '7.0.0';
 
 /**
  * Represents a valid node module that has been successfully resolved.
@@ -47,15 +48,16 @@ function resolve(packageName: string, location: string, rootPackage?: string): N
 function resolveWithMinVersion(
 	packageName: string, minVersionStr: string, probeLocations: string[],
 	rootPackage?: string): NodeModule {
+		/*确保包安装正确*/ 
 	if (rootPackage && !packageName.startsWith(rootPackage)) {
-	throw new Error(`${packageName} must be in the root package`);
+		throw new Error(`${packageName} must be in the root package`);
 	}
 	const minVersion = new Version(minVersionStr);
 	for (const location of probeLocations) {
-	const nodeModule = resolve(packageName, location, rootPackage);
-	if (nodeModule && nodeModule.version.greaterThanOrEqual(minVersion)) {
-		return nodeModule;
-	}
+		const nodeModule = resolve(packageName, location, rootPackage);
+		if (nodeModule && nodeModule.version.greaterThanOrEqual(minVersion)) {
+			return nodeModule;
+		}
 	}
 	throw new Error(
 		`Failed to resolve '${packageName}' with minimum version '${minVersion}' from ` +
@@ -67,6 +69,9 @@ function resolveWithMinVersion(
  * @param probeLocations
  */
 export function resolveTsServer(probeLocations: string[]): NodeModule {
+	/*检测probeLocation*/ 
+	// throw new Error(
+	// 	`what is '${probeLocations}' `);
 	const tsserver = 'typescript/lib/tsserverlibrary';
 	return resolveWithMinVersion(tsserver, MIN_TS_VERSION, probeLocations, 'typescript');
 }
@@ -78,6 +83,10 @@ export function resolveTsServer(probeLocations: string[]): NodeModule {
 export function resolveNgLangSvc(probeLocations: string[]): NodeModule {
 	const nglangsvc = '@angular/language-service';
 	return resolveWithMinVersion(nglangsvc, MIN_NG_VERSION, probeLocations);
+}
+export function resolveDevUI(probeLocations:string[]):NodeModule{
+	const devui = 'ng-devui/index';
+	return resolveWithMinVersion(devui,MIN_DEVUI_VERSION,probeLocations);
 }
 
 /**

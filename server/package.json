@@ -7,12 +7,11 @@
 	"engines": {
 		"node": "*"
 	},
-	"repository": {
-		"type": "git",
-		"url": "https://github.com/sspku-yqLiu/DevUI-language-support.git"
-	},
 	"dependencies": {
-		"vscode-languageserver": "^5.2.1"
+		"@angular/language-service": "9.0.6",
+		"vscode-languageserver": "6.1.1",
+		"vscode-uri": "2.1.1",
+		"ng-devui": "7.0.0"
 	},
 	"scripts": {}
 }

@@ -1,8 +1,8 @@
 /*
  * @Author: your name
  * @Date: 2020-03-08 19:29:37
- * @LastEditTime: 2020-03-10 12:19:22
- * @LastEditors: your name
+ * @LastEditTime: 2020-03-13 22:34:29
+ * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \DevUI-Language-Support\server\src\server.ts
  */
@@ -24,55 +24,59 @@ import {
 	CompletionItemKind,
 	TextDocumentPositionParams
 } from 'vscode-languageserver';
-import{parseCommandLine} from './cmdline_utils';
-import{resolveTsServer,resolveNgLangSvc}from'./version_provider';
-import{ServerHost} from'./server_host'; 
-import {DevUIhtmlSyntaxes} from './DevUIhtmlSyntaxes';
-import { DConnection } from './connection';
+import { generateHelpMessage,parseCommandLine } from './cmdline_utils';
+import { resolveTsServer, resolveNgLangSvc,resolveDevUI } from './version_provider';
+import { ServerHost } from './server_host';
+import { DevUIhtmlSyntaxes } from './DevUIhtmlSyntaxes';
+import { DConnection } from './dconnection';
+import { createLogger } from './logger';
 
 //---------------------angular思路---------------
-// /* 读取命令行命令 两个函数*/
-// const options = parseCommandLine(process.argv);
-// /* help 命令*/ 
-// if(options.help){
-// 	/*  待施工 */ 
-// }
+/* 读取命令行命令 两个函数*/
+const options = parseCommandLine(process.argv);
+/* help 命令*/
+if (options.help) {
+	console.error(generateHelpMessage(process.argv));
+	process.exit(0);
+}
 
-// /* 生成日志 */ 
-// // const logger = createlogger();
+/* 生成日志系统 */
+/*两种logger 其中一个是写在vscode-language里面的，一个是写在vscode-languageservice里面的*/
+const logger = createLogger({
+	logFile: options.logFile,
+	logVerbosity: options.logVerbosity,
+});
 
 // /* 定位ts与angular */
-// const ts = resolveTsServer(options.tsProbeLocations);
-// const ng = resolveNgLangSvc(options.ngProbeLocations);
+const ts = resolveTsServer(options.tsProbeLocations);
+const ng = resolveNgLangSvc(options.ngProbeLocations);
+
 
 // /* serverhost */
-// const host = new ServerHost(); 
+const host = new ServerHost();
 //---------------------angular思路---------------
 
 
 // Create a connection for the server. The connection uses Node's IPC as a transport.
 // Also include all preview / proposed LSP features.
-const connection1 = new DConnection();
-connection1.listen();
+const dconnection = new DConnection({
+	host,
+	logger,
+	devProbeLocation: ng.resolvedPath,
+});
+dconnection.info(`DevUI language server process ID: ${process.pid}`);
+dconnection.info(`Using typescript v${ts.version} from ${ts.resolvedPath}`);
+dconnection.info(`Using @angular/language-service v${ng.version} from ${ng.resolvedPath}`);
+// const devui = resolveDevUI(options.devuiProbeLocation);
+// dconnection.info(`Using ng-devui v${devui.version} from ${devui.resolvedPath}`);
+dconnection.info(`Using ng-devui * from *`);
+dconnection.info(`Log file: ${logger.getLogFileName()}`);
+if (process.env.NG_DEBUG === 'true') {
+	dconnection.info('Angular Language Service is running under DEBUG mode');
+}
+if (process.env.TSC_NONPOLLING_WATCHER !== 'true') {
+	dconnection.warn(`Using less efficient polling watcher. Set TSC_NONPOLLING_WATCHER to true.`);
+}
+dconnection.listen();
 
-
-// /*
-// connection.onDidOpenTextDocument((params) => {
-// 	// A text document got opened in VSCode.
-// 	// params.textDocument.uri uniquely identifies the document. For documents store on disk this is a file URI.
-// 	// params.textDocument.text the initial full content of the document.
-// 	connection.console.log(`${params.textDocument.uri} opened.`);
-// });
-// connection.onDidChangeTextDocument((params) => {
-// 	// The content of a text document did change in VSCode.
-// 	// params.textDocument.uri uniquely identifies the document.
-// 	// params.contentChanges describe the content changes to the document.
-// 	connection.console.log(`${params.textDocument.uri} changed: ${JSON.stringify(params.contentChanges)}`);
-// });
-// connection.onDidCloseTextDocument((params) => {
-// 	// A text document got closed in VSCode.
-// 	// params.textDocument.uri uniquely identifies the document.
-// 	connection.console.log(`${params.textDocument.uri} closed.`);
-// });
-// */
 

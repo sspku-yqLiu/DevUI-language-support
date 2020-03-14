@@ -1,0 +1,80 @@
+{
+	"name": "devui-language-support",
+	"description": "language support for DevUI",
+	"author": "yqLiu",
+	"license": "MIT",
+	"version": "0.2.0",
+	"repository": {
+		"type": "git",
+		"url": "https://github.com/sspku-yqLiu/DevUI-language-support.git"
+	},
+	"publisher": "yqLiu",
+	"categories": [],
+	"keywords": [
+		"multi-root ready"
+	],
+	"engines": {
+		"vscode": "^1.33.0"
+	},
+	"activationEvents": [
+		"onLanguage:html"
+	],
+	"main": "./client/out/extension",
+	"contributes": {
+		"configuration": {
+			"type": "object",
+			"title": "Example configuration",
+			"properties": {
+				"languageServerExample.maxNumberOfProblems": {
+					"scope": "resource",
+					"type": "number",
+					"default": 100,
+					"description": "Controls the maximum number of problems produced by the server."
+				},
+				"languageServerExample.trace.server": {
+					"scope": "window",
+					"type": "string",
+					"enum": [
+						"off",
+						"messages",
+						"verbose"
+					],
+					"default": "verbose",
+					"description": "Traces the communication between VS Code and the language server."
+				}
+			}
+		}
+	},
+	"scripts": {
+		"compile": "yarn compile:banner && tsc -b && rollup -c",
+		"compile:banner": "tsc -p server/banner.tsconfig.json && rollup -c banner.rollup.config.js",
+		"watch": "tsc -b -w",
+		"postinstall": "vscode-install && cd client && yarn && cd ../server && yarn && cd ..",
+		"package": "rm -rf dist && node scripts/package.js",
+		"test": "yarn compile:test && jasmine server/out/tests/*_spec.js",
+		"test:lsp": "yarn compile:integration && jasmine integration/out/lsp/*_spec.js",
+		"test:e2e": "yarn compile:integration && ./scripts/e2e.sh",
+		"test:syntaxes": "yarn compile:syntaxes-test && yarn build:syntaxes && jasmine syntaxes/test/driver.js"
+	},
+	"devDependencies": {
+		"@types/jasmine": "3.5.9",
+		"@types/node": "^12.12.30",
+		"clang-format": "1.4.0",
+		"jasmine": "3.5.0",
+		"prettier": "1.19.1",
+		"rollup": "^2.0.6",
+		"rollup-plugin-commonjs": "^10.1.0",
+		"tslint": "6.1.0",
+		"tslint-eslint-rules": "5.4.0",
+		"vsce": "1.74.0",
+		"vscode": "1.1.36",
+		"vscode-jsonrpc": "5.0.1",
+		"vscode-tmgrammar-test": "0.0.8"
+	},
+	"dependencies": {
+		"rollup": "^2.0.6",
+		"typescript": "~3.7.4",
+		"vscode-languageclient": "^6.1.1",
+		"vscode-languageserver": "^6.1.1"
+	}
+}

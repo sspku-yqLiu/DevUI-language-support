@@ -3,12 +3,13 @@
 	"description": "language support for DevUI",
 	"author": "yqLiu",
 	"license": "MIT",
-	"version": "0.1.0",
+	"version": "0.2.0",
 	"repository": {
 		"type": "git",
 		"url": "https://github.com/sspku-yqLiu/DevUI-language-support.git"
 	},
-	"publisher": "vscode-samples",
+	"icon": "DevUI.png",
+	"publisher": "yqLiu",
 	"categories": [],
 	"keywords": [
 		"multi-root ready"
@@ -46,16 +47,32 @@
 		}
 	},
 	"scripts": {
-		"vscode:prepublish": "cd client && npm run update-vscode && cd .. && npm run compile",
-		"compile": "tsc -b",
+		"compile": "yarn compile:banner && tsc -b && rollup -c",
+		"compile:banner": "tsc -p server/banner.tsconfig.json && rollup -c banner.rollup.config.js",
 		"watch": "tsc -b -w",
-		"postinstall": "cd client && npm install && cd ../server && npm install && cd ..",
-		"test": "sh ./scripts/e2e.sh"
+		"postinstall": "vscode-install && cd client && yarn && cd ../server && yarn && cd ..",
+		"package": "copy c:\\MyProgram\\DevUI-language-support\\DevUI-Language-Support\\README.md c:\\MyProgram\\DevUI-language-support\\DevUI-Language-Support\\Release\\README.md&&copy c:\\MyProgram\\DevUI-language-support\\DevUI-Language-Support\\CHANGLOG.md c:\\MyProgram\\DevUI-language-support\\DevUI-Language-Support\\Release\\CHANGLOG.md&&copy c:\\MyProgram\\DevUI-language-support\\DevUI-Language-Support\\DevUI.png c:\\MyProgram\\DevUI-language-support\\DevUI-Language-Support\\Release\\DevUI.png&&copy c:\\MyProgram\\DevUI-language-support\\DevUI-Language-Support\\package.json c:\\MyProgram\\DevUI-language-support\\DevUI-Language-Support\\Release\\package.json&&copy c:\\MyProgram\\DevUI-language-support\\DevUI-Language-Support\\client\\node_modules\\.yarn-integrity c:\\MyProgram\\DevUI-language-support\\DevUI-Language-Support\\Release\\client\\node_modules\\.yarn-integrity&&copy c:\\MyProgram\\DevUI-language-support\\DevUI-Language-Support\\server\\node_modules\\.yarn-integrity c:\\MyProgram\\DevUI-language-support\\DevUI-Language-Support\\Release\\server\\node_modules\\.yarn-integrity&&Xcopy c:\\MyProgram\\DevUI-language-support\\DevUI-Language-Support\\client\\node_modules\\.bin c:\\MyProgram\\DevUI-language-support\\DevUI-Language-Support\\Release\\client\\node_modules\\.bin&&D&&Xcopy c:\\MyProgram\\DevUI-language-support\\DevUI-Language-Support\\client\\node_modules\\semver c:\\MyProgram\\DevUI-language-support\\DevUI-Language-Support\\Release\\client\\node_modules\\semver&&D&&Xcopy c:\\MyProgram\\DevUI-language-support\\DevUI-Language-Support\\client\\node_modules\\vscode-jsonrpc c:\\MyProgram\\DevUI-language-support\\DevUI-Language-Support\\Release\\client\\node_modules\\vscode-jsonrpc&&D&&Xcopy c:\\MyProgram\\DevUI-language-support\\DevUI-Language-Support\\client\\node_modules\\vscode-languageclient c:\\MyProgram\\DevUI-language-support\\DevUI-Language-Support\\Release\\client\\node_modules\\vscode-languageclient&&D&&Xcopy c:\\MyProgram\\DevUI-language-support\\DevUI-Language-Support\\client\\node_modules\\vscode-languageserver-protocol c:\\MyProgram\\DevUI-language-support\\DevUI-Language-Support\\Release\\client\\node_modules\\vscode-languageserver-protocol&&D&&Xcopy c:\\MyProgram\\DevUI-language-support\\DevUI-Language-Support\\client\\node_modules\\vscode-languageserver-types c:\\MyProgram\\DevUI-language-support\\DevUI-Language-Support\\Release\\client\\node_modules\\vscode-languageserver-types&&D&&Xcopy c:\\MyProgram\\DevUI-language-support\\DevUI-Language-Support\\node_modules\\typescript c:\\MyProgram\\DevUI-language-support\\DevUI-Language-Support\\Release\\node_modules\\typescript&&D&&Xcopy c:\\MyProgram\\DevUI-language-support\\DevUI-Language-Support\\server\\node_modules\\.bin c:\\MyProgram\\DevUI-language-support\\DevUI-Language-Support\\Release\\server\\node_modules\\.bin&&D&&Xcopy c:\\MyProgram\\DevUI-language-support\\DevUI-Language-Support\\server\\node_modules\\@angular c:\\MyProgram\\DevUI-language-support\\DevUI-Language-Support\\Release\\server\\node_modules\\@angular&&D&&Xcopy c:\\MyProgram\\DevUI-language-support\\DevUI-Language-Support\\server\\node_modules\\vscode-jsonrpc c:\\MyProgram\\DevUI-language-support\\DevUI-Language-Support\\Release\\server\\node_modules\\vscode-jsonrpc&&D&&Xcopy c:\\MyProgram\\DevUI-language-support\\DevUI-Language-Support\\server\\node_modules\\vscode-languageserver c:\\MyProgram\\DevUI-language-support\\DevUI-Language-Support\\Release\\server\\node_modules\\vscode-languageserver&&D&&Xcopy c:\\MyProgram\\DevUI-language-support\\DevUI-Language-Support\\server\\node_modules\\vscode-languageserver-protocol c:\\MyProgram\\DevUI-language-support\\DevUI-Language-Support\\Release\\server\\node_modules\\vscode-languageserver-protocol&&D&&Xcopy c:\\MyProgram\\DevUI-language-support\\DevUI-Language-Support\\server\\node_modules\\vscode-languageserver-types c:\\MyProgram\\DevUI-language-support\\DevUI-Language-Support\\Release\\server\\node_modules\\vscode-languageserver-types&&D&&Xcopy c:\\MyProgram\\DevUI-language-support\\DevUI-Language-Support\\server\\node_modules\\vscode-uri c:\\MyProgram\\DevUI-language-support\\DevUI-Language-Support\\Release\\server\\node_modules\\vscode-uri",
+		"test": "yarn compile:test && jasmine server/out/tests/*_spec.js",
+		"test:lsp": "yarn compile:integration && jasmine integration/out/lsp/*_spec.js",
+		"test:e2e": "yarn compile:integration && ./scripts/e2e.sh",
+		"test:syntaxes": "yarn compile:syntaxes-test && yarn build:syntaxes && jasmine syntaxes/test/driver.js"
 	},
 	"devDependencies": {
-		"@types/mocha": "^5.2.7",
-		"@types/node": "^12.11.7",
-		"tslint": "^5.16.0",
-		"typescript": "^3.6.4"
+		"@types/jasmine": "3.5.9",
+		"@types/node": "^12.12.30",
+		"clang-format": "1.4.0",
+		"jasmine": "3.5.0",
+		"prettier": "1.19.1",
+		"rollup": "^2.0.6",
+		"rollup-plugin-commonjs": "^10.1.0",
+		"tslint": "6.1.0",
+		"tslint-eslint-rules": "5.4.0",
+		"vsce": "1.74.0",
+		"vscode": "1.1.36",
+		"vscode-jsonrpc": "5.0.1",
+		"vscode-tmgrammar-test": "0.0.8"
+	},
+	"dependencies": {
+		"typescript": "~3.7.4"
 	}
 }

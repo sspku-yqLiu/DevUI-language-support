@@ -1,25 +1,10 @@
 {
-	"name": "lsp-sample-client",
-	"description": "VSCode part of a language server",
-	"author": "Microsoft Corporation",
+	"name": "devui-languange-support-client",
+	"description": "client",
+	"author": "yqLiu",
 	"license": "MIT",
-	"version": "0.0.1",
-	"publisher": "vscode",
-	"repository": {
-		"type": "git",
-		"url": "https://github.com/sspku-yqLiu/DevUI-language-support.git"
-	},
-	"engines": {
-		"vscode": "^1.33.0"
-	},
-	"scripts": {
-		"update-vscode": "vscode-install",
-		"postinstall": "vscode-install"
-	},
+	"version": "0.2.0",
 	"dependencies": {
-		"vscode-languageclient": "^5.2.1"
-	},
-	"devDependencies": {
-		"vscode": "^1.1.35"
+		"vscode-languageclient": "^6.1.1"
 	}
 }

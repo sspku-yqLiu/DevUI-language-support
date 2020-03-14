@@ -1,6 +1,9 @@
 #!/usr/bin/env bash
 
-export CODE_TESTS_PATH="$(pwd)/client/out/test"
-export CODE_TESTS_WORKSPACE="$(pwd)/client/testFixture"
+set -ex -o pipefail
 
-node "$(pwd)/client/node_modules/vscode/bin/test"
+export NG_DEBUG="true"
+export CODE_TESTS_PATH="$(pwd)/integration/out/e2e"
+export CODE_TESTS_WORKSPACE="$(pwd)/integration/project"
+
+node "$(pwd)/node_modules/vscode/bin/test"

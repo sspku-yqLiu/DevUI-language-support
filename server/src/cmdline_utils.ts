@@ -1,39 +1,77 @@
 /*
  * @Author: your name
- * @Date: 2020-03-07 19:30:51
- * @LastEditTime: 2020-03-07 19:30:52
+ * @Date: 2020-03-08 19:29:37
+ * @LastEditTime: 2020-03-14 09:28:45
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
- * @FilePath: \lsp-sample\server\src\cmdline_utils.ts
+ * @FilePath: \DevUi-language-support\server\src\cmdline_utils.ts
  */
-function findArgument(argv:string[],argName:string):string|undefined {
+
+/**
+ * @license
+ * Copyright Google Inc. All Rights Reserved.
+ *
+ * Use of this source code is governed by an MIT-style license that can be
+ * found in the LICENSE file at https://angular.io/license
+ */
+
+function findArgument(argv: string[], argName: string): string | undefined {
 	const index = argv.indexOf(argName);
 	if (index < 0 || index === argv.length - 1) {
 		return;
 	}
 	return argv[index + 1];
 }
-function parseStringArray(argv:string[],argName:string): string[]{
-	const arg = findArgument(argv,argName);
-	if(!arg){
+
+function parseStringArray(argv: string[], argName: string): string[] {
+	const arg = findArgument(argv, argName);
+	if (!arg) {
 		return [];
 	}
 	return arg.split(',');
 }
-interface CommandLineOptions{
+
+function hasArgument(argv: string[], argName: string): boolean {
+	return argv.includes(argName);
+}
+
+interface CommandLineOptions {
 	help: boolean;
 	logFile?: string;
 	logVerbosity?: string;
 	ngProbeLocations: string[];
 	tsProbeLocations: string[];
+	// devuiProbeLocation:string[];
 }
-/* 待施工 */ 
-export function parseCommandLine(argv: string[]): CommandLineOptions{
+
+export function parseCommandLine(argv: string[]): CommandLineOptions {
 	return {
-		help: false,
-		logFile: 'logfile',
-		logVerbosity: 'logVerbosity',
+		help: hasArgument(argv, '--help'),
+		logFile: findArgument(argv, '--logFile'),
+		logVerbosity: findArgument(argv, '--logVerbosity'),
 		ngProbeLocations: parseStringArray(argv, '--ngProbeLocations'),
-		tsProbeLocations:parseStringArray(argv, '--tsProbeLocations'),
+		tsProbeLocations: parseStringArray(argv, '--tsProbeLocations')
+		// devuiProbeLocation:parseStringArray(argv,'--devuiProbeLocation')
 	};
-}	
+}
+
+export function generateHelpMessage(argv: string[]) {
+	return `Angular Language Service that implements the Language Server Protocol (LSP).
+  
+	Usage: ${argv[0]} ${argv[1]} [options]
+  
+	Options:
+	  --help: Prints help message.
+	  --logFile: Location to log messages. Logging is disabled if not provided.
+	  --logVerbosity: terse|normal|verbose|requestTime. See ts.server.LogLevel.
+	  --ngProbeLocations: Path of @angular/language-service. Required.
+	  --tsProbeLocations: Path of typescript. Required.
+	  --devuiProbeLocation:Path of DevUI. Required
+  
+	Additional options supported by vscode-languageserver:
+	  --clientProcessId=<number>: Automatically kills the server if the client process dies.
+	  --node-ipc: Communicate using Node's IPC. This is the default.
+	  --stdio: Communicate over stdin/stdout.
+	  --socket=<number>: Communicate using Unix socket.
+	`;
+}

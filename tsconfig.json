@@ -2,21 +2,24 @@
 	"compilerOptions": {
 		"module": "commonjs",
 		"moduleResolution": "node",
-		"target": "es6",
-		"outDir": "out",
-		"rootDir": "src",
+		"target": "es2015",
+		// "outDir": "out",
+		// "rootDir": "src",
 		"sourceMap": true,
 		"strict":true
 	},
-	"include": [
-		"src"
-	],
-	"exclude": [
-		"node_modules",
-		".vscode-test"
-	],
+	"files": [],
+	// "include": [
+	// 	"src"
+	// ],
+	// "exclude": [
+	// 	"node_modules",
+	// 	".vscode-test"
+	// ],
 	"references": [
 		{ "path": "./client" },
 		{ "path": "./server" }
+		// 未来的语法开发位置
+		// {"path": "./syntaxes"}
 	]
 }
