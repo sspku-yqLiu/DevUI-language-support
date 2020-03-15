@@ -52,6 +52,7 @@
 		"watch": "tsc -b -w",
 		"postinstall": "vscode-install && cd client && yarn && cd ../server && yarn && cd ..",
 		"package": "rollup -c && cd scripts && java Package && cd ../Release && vsce package",
+		"packageandpublish": "rollup -c && cd scripts && java Package && cd ../Release && vsce package && vsce publish",
 		"test": "yarn compile:test && jasmine server/out/tests/*_spec.js",
 		"test:lsp": "yarn compile:integration && jasmine integration/out/lsp/*_spec.js",
 		"test:e2e": "yarn compile:integration && ./scripts/e2e.sh",
